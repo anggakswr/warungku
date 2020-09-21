@@ -14,6 +14,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import formatHarga from "./formatHarga";
+import RestoreIcon from "@material-ui/icons/Restore";
 
 // ---------------------------------------------------- CSS
 const useStyles = makeStyles((theme) => ({
@@ -33,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
   green: {
     color: green[500],
-  },
-  cardButton: {
-    width: 100,
-    borderRadius: 20,
   },
 }));
 
@@ -60,25 +57,12 @@ export default function BarangCard({
     setAnchorEl(null);
   };
 
-  // ---------------------------------------------------- Set Tot Bayar
-  function tambahBayar() {
-    bayarDispatch({
-      type: "tambah",
-      hargaBrg,
-    });
-  }
-
-  function kurangBayar() {
-    bayarDispatch({
-      type: "kurang",
-      hargaBrg,
-    });
-  }
-
   // ---------------------------------------------------- Render
   return (
     <Card className={classes.root}>
       <CardHeader
+        title={jumlah}
+        subheader="Jumlah"
         action={
           <>
             <IconButton
@@ -117,27 +101,43 @@ export default function BarangCard({
         </Typography>
       </CardContent>
 
-      <CardActions style={{ display: "flex", justifyContent: "space-evenly" }}>
+      <CardActions style={{ display: "flex", justifyContent: "space-around" }}>
+        <IconButton
+          aria-label="Reset jumlah barang"
+          onClick={() => {
+            bayarDispatch({
+              type: "kurangReset",
+              hargaBrg,
+              jumlah,
+            });
+            setJumlah(0);
+          }}
+        >
+          <RestoreIcon />
+        </IconButton>
+
         <IconButton
           aria-label="Kurangi jumlah barang"
           onClick={() => {
             setJumlah((prevCount) => prevCount - 1);
-            kurangBayar();
+            bayarDispatch({
+              type: "kurang",
+              hargaBrg,
+            });
           }}
-          className={classes.cardButton}
         >
           <RemoveIcon />
         </IconButton>
-
-        <Typography variant="h5">{jumlah}</Typography>
 
         <IconButton
           aria-label="Tambah jumlah barang"
           onClick={() => {
             setJumlah((prevCount) => prevCount + 1);
-            tambahBayar();
+            bayarDispatch({
+              type: "tambah",
+              hargaBrg,
+            });
           }}
-          className={classes.cardButton}
         >
           <AddIcon />
         </IconButton>

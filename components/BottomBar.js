@@ -18,7 +18,7 @@ export default function BottomBar({ bayarState, bayarDispatch }) {
         <BottomNavigationAction
           label="Reset"
           icon={<RestoreIcon />}
-          onClick={bayarDispatch("reset")}
+          onClick={() => bayarDispatch({ type: "reset" })}
         />
         <Typography variant="h4" color="primary" style={{ marginTop: 5 }}>
           {formatHarga(bayarState.firstBayar)},-

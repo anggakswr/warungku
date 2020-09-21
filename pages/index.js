@@ -15,8 +15,10 @@ const reducer = (state, action) => {
       return { firstBayar: state.firstBayar + action.hargaBrg };
     case "kurang":
       return { firstBayar: state.firstBayar - action.hargaBrg };
+    case "kurangReset":
+      return { firstBayar: state.firstBayar - action.hargaBrg * action.jumlah };
     case "reset":
-      return { firstBayar: 0 };
+      return initialState;
     default:
       return state;
   }
