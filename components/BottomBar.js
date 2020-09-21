@@ -3,10 +3,13 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import Container from "@material-ui/core/Container";
 import PrintIcon from "@material-ui/icons/Print";
-import Typography from "@material-ui/core/Typography";
 import formatHarga from "./formatHarga";
 
-export default function BottomBar({ bayarState, bayarDispatch }) {
+export default function BottomBar({
+  bayarState,
+  bayarDispatch,
+  resetAllJumlah,
+}) {
   return (
     <Container
       style={{
@@ -18,11 +21,17 @@ export default function BottomBar({ bayarState, bayarDispatch }) {
         <BottomNavigationAction
           label="Reset"
           icon={<RestoreIcon />}
-          onClick={() => bayarDispatch({ type: "reset" })}
+          onClick={() => {
+            bayarDispatch({ type: "reset" });
+            resetAllJumlah();
+          }}
         />
-        <Typography variant="h4" color="primary" style={{ marginTop: 5 }}>
-          {formatHarga(bayarState.firstBayar)},-
-        </Typography>
+
+        <BottomNavigationAction
+          icon={`${formatHarga(bayarState.firstBayar)},-`}
+          style={{ fontSize: 25, color: "green" }}
+        />
+
         <BottomNavigationAction label="Cetak" icon={<PrintIcon />} />
       </BottomNavigation>
     </Container>

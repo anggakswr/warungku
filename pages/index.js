@@ -26,6 +26,11 @@ const reducer = (state, action) => {
 
 export default function Index({ makanans, minumans }) {
   const [bayar, dispatch] = React.useReducer(reducer, initialState);
+  const [resetJumlah, setResetJumlah] = React.useState(false);
+
+  function resetAllJumlah() {
+    setResetJumlah(!resetJumlah);
+  }
 
   return (
     <Grid container spacing={2} style={{ marginBottom: 50 }}>
@@ -34,7 +39,11 @@ export default function Index({ makanans, minumans }) {
       </Grid>
 
       <Grid item xs={12}>
-        <Typography variant="h4" style={{ marginLeft: 20 }}>
+        <Typography
+          variant="h4"
+          style={{ marginLeft: 20 }}
+          onClick={resetAllJumlah}
+        >
           Makanan
         </Typography>
       </Grid>
@@ -47,6 +56,7 @@ export default function Index({ makanans, minumans }) {
               imgBrg={makanan.imgBrg}
               hargaBrg={makanan.hargaBrg}
               bayarDispatch={dispatch}
+              resetJumlah={resetJumlah}
             />
           </Grid>
         ))}
@@ -72,7 +82,11 @@ export default function Index({ makanans, minumans }) {
       </Grid>
 
       <Grid item xs={12}>
-        <BottomBar bayarState={bayar} bayarDispatch={dispatch} />
+        <BottomBar
+          bayarState={bayar}
+          bayarDispatch={dispatch}
+          resetAllJumlah={resetAllJumlah}
+        />
       </Grid>
     </Grid>
   );

@@ -42,6 +42,7 @@ export default function BarangCard({
   imgBrg,
   hargaBrg,
   bayarDispatch,
+  resetJumlah,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [jumlah, setJumlah] = React.useState(0);
@@ -56,6 +57,10 @@ export default function BarangCard({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  React.useEffect(() => {
+    setJumlah(0);
+  }, [resetJumlah]);
 
   // ---------------------------------------------------- Render
   return (
