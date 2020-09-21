@@ -3,23 +3,26 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import Container from "@material-ui/core/Container";
 import PrintIcon from "@material-ui/icons/Print";
-import AddIcon from "@material-ui/icons/Add";
+import Typography from "@material-ui/core/Typography";
+import formatHarga from "./formatHarga";
 
-export default function BottomBar() {
-  const [value, setValue] = React.useState(0);
-
+export default function BottomBar({ bayarState, bayarDispatch }) {
   return (
-    <Container maxWidth="xs">
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        color="primary"
-      >
-        <BottomNavigationAction label="Reset" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Tambah Barang" icon={<AddIcon />} />
+    <Container
+      style={{
+        position: "fixed",
+        bottom: 0,
+      }}
+    >
+      <BottomNavigation color="primary" style={{ borderRadius: 5 }} showLabels>
+        <BottomNavigationAction
+          label="Reset"
+          icon={<RestoreIcon />}
+          onClick={bayarDispatch("reset")}
+        />
+        <Typography variant="h4" color="primary" style={{ marginTop: 5 }}>
+          {formatHarga(bayarState.firstBayar)},-
+        </Typography>
         <BottomNavigationAction label="Cetak" icon={<PrintIcon />} />
       </BottomNavigation>
     </Container>

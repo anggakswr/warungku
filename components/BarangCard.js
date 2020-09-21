@@ -9,12 +9,13 @@ import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import TextField from "@material-ui/core/TextField";
 import green from "@material-ui/core/colors/green";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import formatHarga from "./formatHarga";
 
+// ---------------------------------------------------- CSS
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -33,33 +34,48 @@ const useStyles = makeStyles((theme) => ({
   green: {
     color: green[500],
   },
+  cardButton: {
+    width: 100,
+    borderRadius: 20,
+  },
 }));
 
-export default function BarangCard({ namaBrg, imgBrg, hargaBrg }) {
+export default function BarangCard({
+  namaBrg,
+  imgBrg,
+  hargaBrg,
+  bayarDispatch,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [jumlah, setJumlah] = React.useState(0);
   const classes = useStyles();
+
+  // ---------------------------------------------------- Menu 3 dots
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // ---------------------------------------------------- Menu 3 dots
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const formatHarga = (angka) => {
-    var rupiah = "";
-    var angkarev = angka.toString().split("").reverse().join("");
-    for (var i = 0; i < angkarev.length; i++)
-      if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + ".";
-    return (
-      "Rp " +
-      rupiah
-        .split("", rupiah.length - 1)
-        .reverse()
-        .join("")
-    );
-  };
+  // ---------------------------------------------------- Set Tot Bayar
+  function tambahBayar() {
+    bayarDispatch({
+      type: "tambah",
+      hargaBrg,
+    });
+  }
 
+  function kurangBayar() {
+    bayarDispatch({
+      type: "kurang",
+      hargaBrg,
+    });
+  }
+
+  // ---------------------------------------------------- Render
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -70,6 +86,7 @@ export default function BarangCard({ namaBrg, imgBrg, hargaBrg }) {
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClick}
+              size="small"
             >
               <MoreVertIcon />
             </IconButton>
@@ -80,35 +97,50 @@ export default function BarangCard({ namaBrg, imgBrg, hargaBrg }) {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
+              size="small"
             >
               <MenuItem onClick={handleClose}>Edit Barang</MenuItem>
             </Menu>
           </>
         }
       />
+
       <CardMedia className={classes.media} image={`./${imgBrg}`} />
+
       <CardContent>
         <Typography variant="h6" className={classes.green}>
           {formatHarga(hargaBrg)},-
         </Typography>
+
         <Typography variant="body1" color="textSecondary">
           {namaBrg}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Tambah jumlah barang">
-          <AddIcon />
-        </IconButton>
-        <IconButton aria-label="Kurangi jumlah barang">
+
+      <CardActions style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <IconButton
+          aria-label="Kurangi jumlah barang"
+          onClick={() => {
+            setJumlah((prevCount) => prevCount - 1);
+            kurangBayar();
+          }}
+          className={classes.cardButton}
+        >
           <RemoveIcon />
         </IconButton>
-        <TextField
-          className={classes.input}
-          id="outlined-basic"
-          variant="outlined"
-          defaultValue="0"
-          aria-label="Jumlah barang"
-        />
+
+        <Typography variant="h5">{jumlah}</Typography>
+
+        <IconButton
+          aria-label="Tambah jumlah barang"
+          onClick={() => {
+            setJumlah((prevCount) => prevCount + 1);
+            tambahBayar();
+          }}
+          className={classes.cardButton}
+        >
+          <AddIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );
