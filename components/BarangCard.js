@@ -124,11 +124,13 @@ export default function BarangCard({
         <IconButton
           aria-label="Kurangi jumlah barang"
           onClick={() => {
-            setJumlah((prevCount) => prevCount - 1);
-            bayarDispatch({
-              type: "kurang",
-              hargaBrg,
-            });
+            if (jumlah > 0) {
+              setJumlah((prevCount) => prevCount - 1);
+              bayarDispatch({
+                type: "kurang",
+                hargaBrg,
+              });
+            }
           }}
         >
           <RemoveIcon />

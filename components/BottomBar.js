@@ -4,6 +4,7 @@ import RestoreIcon from "@material-ui/icons/Restore";
 import Container from "@material-ui/core/Container";
 import PrintIcon from "@material-ui/icons/Print";
 import formatHarga from "./formatHarga";
+import Link from "next/link";
 
 export default function BottomBar({
   bayarState,
@@ -17,22 +18,45 @@ export default function BottomBar({
         bottom: 0,
       }}
     >
-      <BottomNavigation color="primary" style={{ borderRadius: 5 }} showLabels>
-        <BottomNavigationAction
-          label="Reset"
-          icon={<RestoreIcon />}
-          onClick={() => {
-            bayarDispatch({ type: "reset" });
-            resetAllJumlah();
-          }}
-        />
+      <BottomNavigation
+        color="primary"
+        style={{ borderRadius: 5 }}
+        component="a"
+      >
+        {bayarDispatch && resetAllJumlah ? (
+          <BottomNavigationAction
+            label="Reset"
+            icon={<RestoreIcon />}
+            onClick={() => {
+              bayarDispatch({ type: "reset" });
+              resetAllJumlah();
+            }}
+            showLabel
+          />
+        ) : (
+          <Link href="/">
+            <BottomNavigationAction
+              label="Reset"
+              icon={<RestoreIcon />}
+              showLabel
+            />
+          </Link>
+        )}
 
-        <BottomNavigationAction
-          icon={`${formatHarga(bayarState.firstBayar)},-`}
-          style={{ fontSize: 25, color: "green" }}
-        />
+        {bayarState && (
+          <BottomNavigationAction
+            icon={`${formatHarga(bayarState.firstBayar)},-`}
+            style={{ fontSize: 25, color: "green" }}
+          />
+        )}
 
-        <BottomNavigationAction label="Cetak" icon={<PrintIcon />} />
+        <Link href="/cetak">
+          <BottomNavigationAction
+            label="Cetak"
+            icon={<PrintIcon />}
+            showLabel
+          />
+        </Link>
       </BottomNavigation>
     </Container>
   );

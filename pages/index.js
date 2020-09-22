@@ -39,11 +39,7 @@ export default function Index({ makanans, minumans }) {
       </Grid>
 
       <Grid item xs={12}>
-        <Typography
-          variant="h4"
-          style={{ marginLeft: 20 }}
-          onClick={resetAllJumlah}
-        >
+        <Typography variant="h4" style={{ marginLeft: 20 }}>
           Makanan
         </Typography>
       </Grid>

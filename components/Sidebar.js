@@ -3,11 +3,9 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
-import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import SettingsIcon from "@material-ui/icons/Settings";
-import LocalDrinkIcon from "@material-ui/icons/LocalDrink";
 import AddIcon from "@material-ui/icons/Add";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 
 export default function Sidebar() {
   return (
@@ -26,6 +24,17 @@ export default function Sidebar() {
           </ListItemIcon>
           <ListItemText primary={"Tambah Banyak Barang Sekaligus"} />
         </ListItem>
+
+        <Divider />
+
+        <ListItem button>
+          <ListItemIcon>
+            <AssessmentIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Laporan Penjualan"} />
+        </ListItem>
+
+        <Divider />
 
         <ListItem button>
           <ListItemIcon>
