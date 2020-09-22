@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Header from "../components/Header";
 import BottomBar from "../components/BottomBar";
 import Divider from "@material-ui/core/Divider";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   demo: {
@@ -20,16 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
-
 export default function Cetak() {
   const classes = useStyles();
+  const router = useRouter();
+  console.log(router.query);
 
   return (
     <Grid container spacing={2} style={{ marginBottom: 50 }}>

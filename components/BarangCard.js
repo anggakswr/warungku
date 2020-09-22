@@ -43,6 +43,7 @@ export default function BarangCard({
   hargaBrg,
   bayarDispatch,
   resetJumlah,
+  cetak,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [jumlah, setJumlah] = React.useState(0);
@@ -58,9 +59,21 @@ export default function BarangCard({
     setAnchorEl(null);
   };
 
+  // ---------------------------------------------------- Reset jumlah
   React.useEffect(() => {
     setJumlah(0);
   }, [resetJumlah]);
+
+  // ---------------------------------------------------- Push cetak object
+  React.useEffect(() => {
+    bayarDispatch({
+      type: "cetak",
+      cetakObj: {
+        namaBrg,
+        totHarga: jumlah * hargaBrg,
+      },
+    });
+  }, [cetak]);
 
   // ---------------------------------------------------- Render
   return (

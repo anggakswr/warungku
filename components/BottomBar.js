@@ -10,6 +10,7 @@ export default function BottomBar({
   bayarState,
   bayarDispatch,
   resetAllJumlah,
+  handleClickOpen,
 }) {
   return (
     <Container
@@ -50,13 +51,12 @@ export default function BottomBar({
           />
         )}
 
-        <Link href="/cetak">
-          <BottomNavigationAction
-            label="Cetak"
-            icon={<PrintIcon />}
-            showLabel
-          />
-        </Link>
+        <BottomNavigationAction
+          label="Cetak"
+          icon={<PrintIcon />}
+          showLabel
+          onClick={handleClickOpen}
+        />
       </BottomNavigation>
     </Container>
   );

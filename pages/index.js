@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import BottomBar from "../components/BottomBar";
+import Cetak from "../components/Cetak";
 import Grid from "@material-ui/core/Grid";
 import BarangCard from "../components/BarangCard";
 import Typography from "@material-ui/core/Typography";
@@ -7,16 +8,25 @@ import Typography from "@material-ui/core/Typography";
 // Reducer
 const initialState = {
   firstBayar: 0,
+  firstCetak: [],
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "tambah":
-      return { firstBayar: state.firstBayar + action.hargaBrg };
+      return { ...state, firstBayar: state.firstBayar + action.hargaBrg };
     case "kurang":
-      return { firstBayar: state.firstBayar - action.hargaBrg };
+      return { ...state, firstBayar: state.firstBayar - action.hargaBrg };
     case "kurangReset":
-      return { firstBayar: state.firstBayar - action.hargaBrg * action.jumlah };
+      return {
+        ...state,
+        firstBayar: state.firstBayar - action.hargaBrg * action.jumlah,
+      };
+    case "cetak":
+      return {
+        ...state,
+        firstCetak: state.firstCetak.concat(action.cetakObj),
+      };
     case "reset":
       return initialState;
     default:
@@ -27,7 +37,18 @@ const reducer = (state, action) => {
 export default function Index({ makanans, minumans }) {
   const [bayar, dispatch] = React.useReducer(reducer, initialState);
   const [resetJumlah, setResetJumlah] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
+  // Handle cetak
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // Reset jumlah
   function resetAllJumlah() {
     setResetJumlah(!resetJumlah);
   }
@@ -72,6 +93,7 @@ export default function Index({ makanans, minumans }) {
               imgBrg={minuman.imgBrg}
               hargaBrg={minuman.hargaBrg}
               bayarDispatch={dispatch}
+              resetJumlah={resetJumlah}
             />
           </Grid>
         ))}
@@ -82,7 +104,9 @@ export default function Index({ makanans, minumans }) {
           bayarState={bayar}
           bayarDispatch={dispatch}
           resetAllJumlah={resetAllJumlah}
+          handleClickOpen={handleClickOpen}
         />
+        <Cetak openCetak={open} handleClose={handleClose} />
       </Grid>
     </Grid>
   );
