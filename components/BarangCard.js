@@ -17,7 +17,7 @@ import formatHarga from "./formatHarga";
 import RestoreIcon from "@material-ui/icons/Restore";
 
 // ---------------------------------------------------- CSS
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 345,
   },
@@ -66,13 +66,16 @@ export default function BarangCard({
 
   // ---------------------------------------------------- Push cetak object
   React.useEffect(() => {
-    bayarDispatch({
-      type: "cetak",
-      cetakObj: {
-        namaBrg,
-        totHarga: jumlah * hargaBrg,
-      },
-    });
+    if (jumlah > 0) {
+      bayarDispatch({
+        type: "cetak",
+        cetakObj: {
+          namaBrg,
+          jumlah,
+          totHarga: jumlah * hargaBrg,
+        },
+      });
+    }
   }, [cetak]);
 
   // ---------------------------------------------------- Render

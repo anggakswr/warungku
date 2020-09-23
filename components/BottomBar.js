@@ -7,10 +7,11 @@ import formatHarga from "./formatHarga";
 import Link from "next/link";
 
 export default function BottomBar({
-  bayarState,
+  totBayar,
   bayarDispatch,
   resetAllJumlah,
   handleClickOpen,
+  cetakAll,
 }) {
   return (
     <Container
@@ -44,9 +45,9 @@ export default function BottomBar({
           </Link>
         )}
 
-        {bayarState && (
+        {totBayar && (
           <BottomNavigationAction
-            icon={`${formatHarga(bayarState.firstBayar)},-`}
+            icon={`${formatHarga(totBayar)},-`}
             style={{ fontSize: 25, color: "green" }}
           />
         )}
@@ -55,7 +56,10 @@ export default function BottomBar({
           label="Cetak"
           icon={<PrintIcon />}
           showLabel
-          onClick={handleClickOpen}
+          onClick={() => {
+            handleClickOpen();
+            cetakAll();
+          }}
         />
       </BottomNavigation>
     </Container>

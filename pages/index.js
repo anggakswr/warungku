@@ -25,7 +25,9 @@ const reducer = (state, action) => {
     case "cetak":
       return {
         ...state,
-        firstCetak: state.firstCetak.concat(action.cetakObj),
+        firstCetak: state.firstCetak
+          .filter((obj) => obj.namaBrg != action.cetakObj.namaBrg)
+          .concat(action.cetakObj),
       };
     case "reset":
       return initialState;
@@ -38,6 +40,7 @@ export default function Index({ makanans, minumans }) {
   const [bayar, dispatch] = React.useReducer(reducer, initialState);
   const [resetJumlah, setResetJumlah] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [cetak, setCetak] = React.useState(false);
 
   // Handle cetak
   const handleClickOpen = () => {
@@ -51,6 +54,12 @@ export default function Index({ makanans, minumans }) {
   // Reset jumlah
   function resetAllJumlah() {
     setResetJumlah(!resetJumlah);
+  }
+
+  // Cetak all
+  function cetakAll() {
+    setCetak(!cetak);
+    console.log(bayar.firstCetak);
   }
 
   return (
@@ -74,6 +83,7 @@ export default function Index({ makanans, minumans }) {
               hargaBrg={makanan.hargaBrg}
               bayarDispatch={dispatch}
               resetJumlah={resetJumlah}
+              cetak={cetak}
             />
           </Grid>
         ))}
@@ -94,6 +104,7 @@ export default function Index({ makanans, minumans }) {
               hargaBrg={minuman.hargaBrg}
               bayarDispatch={dispatch}
               resetJumlah={resetJumlah}
+              cetak={cetak}
             />
           </Grid>
         ))}
@@ -101,12 +112,13 @@ export default function Index({ makanans, minumans }) {
 
       <Grid item xs={12}>
         <BottomBar
-          bayarState={bayar}
+          totBayar={bayar.firstBayar}
           bayarDispatch={dispatch}
           resetAllJumlah={resetAllJumlah}
           handleClickOpen={handleClickOpen}
+          cetakAll={cetakAll}
         />
-        <Cetak openCetak={open} handleClose={handleClose} />
+        <Cetak openCetak={open} handleClose={handleClose} bayarState={bayar} />
       </Grid>
     </Grid>
   );

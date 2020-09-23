@@ -2,7 +2,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -11,20 +10,18 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Divider from "@material-ui/core/Divider";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useTheme from "@material-ui/core/styles/useTheme";
+import formatHarga from "./formatHarga";
 
-const useStyles = makeStyles((theme) => ({
-  listItemku: {
-    margin: "0 -30",
-  },
-}));
-
-export default function Cetak({ openCetak, handleClose }) {
-  const classes = useStyles();
+export default function Cetak({ openCetak, handleClose, bayarState }) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog
+      fullScreen={fullScreen}
       open={openCetak}
       onClose={handleClose}
       aria-labelledby="pencetakan-struk-warungku"
@@ -33,42 +30,32 @@ export default function Cetak({ openCetak, handleClose }) {
       <DialogTitle id="alert-dialog-title">Total Pembayaran</DialogTitle>
       <DialogContent style={{ minWidth: "78vmin" }}>
         <List>
-          <ListItem className={classes.listItemku}>
-            <ListItemAvatar>
-              <Avatar>
-                <Typography variant="h6">1</Typography>
-              </Avatar>
-            </ListItemAvatar>
+          {bayarState.firstCetak.map((barang, index) => (
+            <ListItem key={index}>
+              <ListItemAvatar>
+                <Avatar>
+                  <Typography variant="h6">{barang.jumlah}</Typography>
+                </Avatar>
+              </ListItemAvatar>
 
-            <ListItemText primary="Soto Ayam" />
+              <ListItemText primary={barang.namaBrg} />
 
-            <ListItemSecondaryAction>
-              <Typography variant="h6">Rp 10.000,-</Typography>
-            </ListItemSecondaryAction>
-          </ListItem>
-
-          <ListItem className={classes.listItemku}>
-            <ListItemAvatar>
-              <Avatar>
-                <Typography variant="h6">3</Typography>
-              </Avatar>
-            </ListItemAvatar>
-
-            <ListItemText primary="Jus Jambu Muda" />
-
-            <ListItemSecondaryAction>
-              <Typography variant="h6">Rp 9.000,-</Typography>
-            </ListItemSecondaryAction>
-          </ListItem>
+              <ListItemSecondaryAction>
+                <Typography variant="h6">
+                  {formatHarga(barang.totHarga)},-
+                </Typography>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
 
           <Divider />
 
-          <ListItem className={classes.listItemku}>
+          <ListItem>
             <ListItemText primary="Total" />
 
             <ListItemSecondaryAction>
               <Typography variant="h6" color="primary">
-                Rp 19.000,-
+                {formatHarga(bayarState.firstBayar)},-
               </Typography>
             </ListItemSecondaryAction>
           </ListItem>
