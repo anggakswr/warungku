@@ -15,7 +15,12 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useTheme from "@material-ui/core/styles/useTheme";
 import formatHarga from "./formatHarga";
 
-export default function Cetak({ openCetak, handleClose, bayarState }) {
+export default function Cetak({
+  openCetak,
+  handleClose,
+  bayarState,
+  handleClickSnackbar,
+}) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -61,11 +66,20 @@ export default function Cetak({ openCetak, handleClose, bayarState }) {
           </ListItem>
         </List>
       </DialogContent>
+
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Batal
         </Button>
-        <Button onClick={handleClose} color="primary" autoFocus>
+
+        <Button
+          onClick={() => {
+            handleClose();
+            handleClickSnackbar();
+          }}
+          color="primary"
+          autoFocus
+        >
           Input ke Database
         </Button>
       </DialogActions>

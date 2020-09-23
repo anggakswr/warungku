@@ -5,6 +5,15 @@ import Grid from "@material-ui/core/Grid";
 import BarangCard from "../components/BarangCard";
 import Typography from "@material-ui/core/Typography";
 
+// Snackbar
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
+// Snackbar
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 // Reducer
 const initialState = {
   firstBayar: 0,
@@ -33,11 +42,15 @@ const reducer = (state, action) => {
 
 export default function Index({ makanans, minumans }) {
   const [bayar, dispatch] = React.useReducer(reducer, initialState);
+
+  // Reset jumlah
   const [resetJumlah, setResetJumlah] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-  const [cetak, setCetak] = React.useState(false);
+  function resetAllJumlah() {
+    setResetJumlah(!resetJumlah);
+  }
 
   // Handle cetak
+  const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,16 +59,26 @@ export default function Index({ makanans, minumans }) {
     setOpen(false);
   };
 
-  // Reset jumlah
-  function resetAllJumlah() {
-    setResetJumlah(!resetJumlah);
-  }
-
   // Cetak all
+  const [cetak, setCetak] = React.useState(false);
   function cetakAll() {
     setCetak(!cetak);
     console.log(bayar.firstCetak);
   }
+
+  // Snackbar
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const handleClickSnackbar = () => {
+    setOpenSnackbar(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
 
   return (
     <Grid container spacing={2} style={{ marginBottom: 50 }}>
@@ -113,7 +136,24 @@ export default function Index({ makanans, minumans }) {
           handleClickOpen={handleClickOpen}
           cetakAll={cetakAll}
         />
-        <Cetak openCetak={open} handleClose={handleClose} bayarState={bayar} />
+
+        <Cetak
+          openCetak={open}
+          handleClose={handleClose}
+          bayarState={bayar}
+          handleClickSnackbar={handleClickSnackbar}
+          openSnackbar={openSnackbar}
+        />
+
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert onClose={handleCloseSnackbar} severity="success">
+            Transaksi berhasil disimpan!
+          </Alert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
