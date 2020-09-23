@@ -25,25 +25,15 @@ export default function BottomBar({
         style={{ borderRadius: 5 }}
         component="a"
       >
-        {bayarDispatch && resetAllJumlah ? (
-          <BottomNavigationAction
-            label="Reset"
-            icon={<RestoreIcon />}
-            onClick={() => {
-              bayarDispatch({ type: "reset" });
-              resetAllJumlah();
-            }}
-            showLabel
-          />
-        ) : (
-          <Link href="/">
-            <BottomNavigationAction
-              label="Reset"
-              icon={<RestoreIcon />}
-              showLabel
-            />
-          </Link>
-        )}
+        <BottomNavigationAction
+          label="Reset"
+          icon={<RestoreIcon />}
+          onClick={() => {
+            bayarDispatch({ type: "reset" });
+            resetAllJumlah();
+          }}
+          showLabel
+        />
 
         {totBayar && (
           <BottomNavigationAction

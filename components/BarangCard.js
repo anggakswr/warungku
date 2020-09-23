@@ -15,6 +15,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import formatHarga from "./formatHarga";
 import RestoreIcon from "@material-ui/icons/Restore";
+import TextField from "@material-ui/core/TextField";
 
 // ---------------------------------------------------- CSS
 const useStyles = makeStyles(() => ({
@@ -28,12 +29,11 @@ const useStyles = makeStyles(() => ({
   avatar: {
     backgroundColor: red[500],
   },
-  input: {
-    marginLeft: "auto",
-    width: "50px",
-  },
   green: {
     color: green[500],
+  },
+  fift: {
+    width: 50,
   },
 }));
 
@@ -82,8 +82,24 @@ export default function BarangCard({
   return (
     <Card className={classes.root}>
       <CardHeader
-        title={jumlah}
-        subheader="Jumlah"
+        title={
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            value={jumlah}
+            label="Jumlah"
+            className={classes.fift}
+            onChange={(e) => {
+              bayarDispatch({
+                type: "tambah",
+                hargaBrg: e.target.value * hargaBrg - jumlah * hargaBrg,
+              });
+              setJumlah(e.target.value);
+            }}
+          >
+            {jumlah}
+          </TextField>
+        }
         action={
           <>
             <IconButton
@@ -127,9 +143,8 @@ export default function BarangCard({
           aria-label="Reset jumlah barang"
           onClick={() => {
             bayarDispatch({
-              type: "kurangReset",
-              hargaBrg,
-              jumlah,
+              type: "kurang",
+              hargaBrg: hargaBrg * jumlah,
             });
             setJumlah(0);
           }}
@@ -141,7 +156,7 @@ export default function BarangCard({
           aria-label="Kurangi jumlah barang"
           onClick={() => {
             if (jumlah > 0) {
-              setJumlah((prevCount) => prevCount - 1);
+              setJumlah((prevCount) => parseInt(prevCount, 10) - 1);
               bayarDispatch({
                 type: "kurang",
                 hargaBrg,
@@ -155,7 +170,7 @@ export default function BarangCard({
         <IconButton
           aria-label="Tambah jumlah barang"
           onClick={() => {
-            setJumlah((prevCount) => prevCount + 1);
+            setJumlah((prevCount) => parseInt(prevCount, 10) + 1);
             bayarDispatch({
               type: "tambah",
               hargaBrg,

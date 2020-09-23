@@ -17,11 +17,6 @@ const reducer = (state, action) => {
       return { ...state, firstBayar: state.firstBayar + action.hargaBrg };
     case "kurang":
       return { ...state, firstBayar: state.firstBayar - action.hargaBrg };
-    case "kurangReset":
-      return {
-        ...state,
-        firstBayar: state.firstBayar - action.hargaBrg * action.jumlah,
-      };
     case "cetak":
       return {
         ...state,
