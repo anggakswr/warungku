@@ -5,6 +5,9 @@ import Grid from "@material-ui/core/Grid";
 import BarangCard from "../components/BarangCard";
 import Typography from "@material-ui/core/Typography";
 
+// baseUrl
+import { useRouter } from "next/router";
+
 // Snackbar
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -164,9 +167,9 @@ export default function Index({ makanans, minumans }) {
 }
 
 export async function getStaticProps() {
-  const resMakanan = await fetch("http://localhost:3000/api/makanan");
+  const resMakanan = await fetch("/api/makanan");
   const makanans = await resMakanan.json();
-  const resMinuman = await fetch("http://localhost:3000/api/minuman");
+  const resMinuman = await fetch("/api/minuman");
   const minumans = await resMinuman.json();
   return {
     props: {
