@@ -38,7 +38,7 @@ export default function BottomBar({
         {totBayar && (
           <BottomNavigationAction
             icon={`${formatHarga(totBayar)},-`}
-            style={{ fontSize: 25, color: "green" }}
+            style={{ fontSize: 15, color: "green" }}
           />
         )}
 

@@ -14,11 +14,11 @@ CREATE TABLE Minuman (
 );
 
 INSERT INTO Makanan (namaBrg, hargaBrg, imgBrg)
-VALUES ('Nasi Goreng Bude',12000,'nasi-goreng.jpg');
+VALUES ('Nasi Goreng',12000,'nasi-goreng.jpg');
 INSERT INTO Makanan (namaBrg, hargaBrg, imgBrg)
-VALUES ('Bubur Ayam Pak Le',15000,'bubur-ayam.jpeg');
+VALUES ('Bubur Ayam',15000,'bubur-ayam.jpeg');
 INSERT INTO Makanan (namaBrg, hargaBrg, imgBrg)
-VALUES ('Soto Ayam Pak Doel',20000,'soto-ayam.jpg');
+VALUES ('Soto Ayam',20000,'soto-ayam.jpg');
 
 INSERT INTO Minuman (namaBrg, hargaBrg, imgBrg)
 VALUES ('Es Jeruk',12000,'es-jeruk.jpeg');
