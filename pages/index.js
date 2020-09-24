@@ -6,7 +6,7 @@ import BarangCard from "../components/BarangCard";
 import Typography from "@material-ui/core/Typography";
 
 // baseUrl
-import { useRouter } from "next/router";
+import { server } from "../config";
 
 // Snackbar
 import MuiAlert from "@material-ui/lab/Alert";
@@ -167,9 +167,9 @@ export default function Index({ makanans, minumans }) {
 }
 
 export async function getStaticProps() {
-  const resMakanan = await fetch("/api/makanan");
+  const resMakanan = await fetch(`${server}/api/makanan`);
   const makanans = await resMakanan.json();
-  const resMinuman = await fetch("/api/minuman");
+  const resMinuman = await fetch(`${server}/api/minuman`);
   const minumans = await resMinuman.json();
   return {
     props: {
