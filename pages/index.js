@@ -85,7 +85,7 @@ export default function Index({ makanans, minumans }) {
       <Grid
         item
         xs={12}
-        style={{ position: "fixed", zIndex: 2, width: "100vw" }}
+        style={{ position: "fixed", width: "100vw", marginLeft: 10, zIndex: 2 }}
       >
         <Header />
       </Grid>

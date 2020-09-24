@@ -4,7 +4,6 @@ import RestoreIcon from "@material-ui/icons/Restore";
 import Container from "@material-ui/core/Container";
 import PrintIcon from "@material-ui/icons/Print";
 import formatHarga from "./formatHarga";
-import Link from "next/link";
 
 export default function BottomBar({
   totBayar,
@@ -18,6 +17,7 @@ export default function BottomBar({
       style={{
         position: "fixed",
         bottom: 0,
+        zIndex: 2,
       }}
     >
       <BottomNavigation

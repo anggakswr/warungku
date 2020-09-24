@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 2,
   },
   iconButton: {
     padding: 10,
@@ -86,7 +86,7 @@ export default function Header() {
         </IconButton>
         <InputBase
           className={classes.input}
-          placeholder="Cari makanan & minuman"
+          placeholder="Cari makanan dan minuman"
           inputProps={{ "aria-label": "Search google maps" }}
         />
         <IconButton
