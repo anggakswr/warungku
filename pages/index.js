@@ -5,19 +5,19 @@ import Grid from "@material-ui/core/Grid";
 import BarangCard from "../components/BarangCard";
 import Typography from "@material-ui/core/Typography";
 
-// baseUrl
+// ---------------------------------------------------- BaseURL
 import { server } from "../config";
 
-// Snackbar
+// ---------------------------------------------------- Snackbar
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
-// Snackbar
+// ---------------------------------------------------- Snackbar
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-// Reducer
+// ---------------------------------------------------- Reducer
 const initialState = {
   firstBayar: 0,
   firstCetak: [],
@@ -44,15 +44,16 @@ const reducer = (state, action) => {
 };
 
 export default function Index({ makanans, minumans }) {
+  // ---------------------------------------------------- Reducer
   const [bayar, dispatch] = React.useReducer(reducer, initialState);
 
-  // Reset jumlah
+  // ---------------------------------------------------- Reset jumlah
   const [resetJumlah, setResetJumlah] = React.useState(false);
   function resetAllJumlah() {
     setResetJumlah(!resetJumlah);
   }
 
-  // Handle cetak
+  // ---------------------------------------------------- Handle cetak
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -62,14 +63,14 @@ export default function Index({ makanans, minumans }) {
     setOpen(false);
   };
 
-  // Cetak all
+  // ---------------------------------------------------- Cetak all
   const [cetak, setCetak] = React.useState(false);
   function cetakAll() {
     setCetak(!cetak);
     console.log(bayar.firstCetak);
   }
 
-  // Snackbar
+  // ---------------------------------------------------- Snackbar
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const handleClickSnackbar = () => {
     setOpenSnackbar(true);
@@ -85,6 +86,7 @@ export default function Index({ makanans, minumans }) {
 
   return (
     <Grid container spacing={2} style={{ marginBottom: 50 }}>
+      {/* ---------------------------------------------------- Header */}
       <Grid
         item
         xs={12}
@@ -93,12 +95,14 @@ export default function Index({ makanans, minumans }) {
         <Header />
       </Grid>
 
+      {/* ---------------------------------------------------- Kategori */}
       <Grid item xs={12}>
         <Typography variant="h4" style={{ marginLeft: 20 }}>
           Makanan
         </Typography>
       </Grid>
 
+      {/* ---------------------------------------------------- Makanan List */}
       <Grid item container spacing={2}>
         {makanans.map((makanan) => (
           <Grid item xs={6} sm={3} key={makanan.id}>
@@ -114,12 +118,14 @@ export default function Index({ makanans, minumans }) {
         ))}
       </Grid>
 
+      {/* ---------------------------------------------------- Kategori */}
       <Grid item xs={12}>
         <Typography variant="h4" style={{ marginLeft: 20 }}>
           Minuman
         </Typography>
       </Grid>
 
+      {/* ---------------------------------------------------- Minuman List */}
       <Grid item container spacing={2}>
         {minumans.map((minuman) => (
           <Grid item xs={6} sm={3} key={minuman.id}>
@@ -135,6 +141,7 @@ export default function Index({ makanans, minumans }) {
         ))}
       </Grid>
 
+      {/* ---------------------------------------------------- Bottom Bar */}
       <Grid item xs={12}>
         <BottomBar
           totBayar={bayar.firstBayar}
@@ -144,6 +151,7 @@ export default function Index({ makanans, minumans }) {
           cetakAll={cetakAll}
         />
 
+        {/* ---------------------------------------------------- Halaman Cetak */}
         <Cetak
           openCetak={open}
           handleClose={handleClose}
@@ -152,6 +160,7 @@ export default function Index({ makanans, minumans }) {
           openSnackbar={openSnackbar}
         />
 
+        {/* ---------------------------------------------------- Pesan Berhasil */}
         <Snackbar
           open={openSnackbar}
           autoHideDuration={6000}
@@ -167,9 +176,9 @@ export default function Index({ makanans, minumans }) {
 }
 
 export async function getStaticProps() {
-  const resMakanan = await fetch(`${server}/api/makanan`);
+  const resMakanan = await fetch(`${server}api/makanan`);
   const makanans = await resMakanan.json();
-  const resMinuman = await fetch(`${server}/api/minuman`);
+  const resMinuman = await fetch(`${server}api/minuman`);
   const minumans = await resMinuman.json();
   return {
     props: {
